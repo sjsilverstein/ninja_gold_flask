@@ -1,0 +1,59 @@
+<!-- Stephen Silverstein
+	https://github.com/sjsilverstein -->
+	<!DOCTYPE html>
+	<html>
+	<head>
+		<meta charset="utf-8"/>
+		<title></title>
+		<meta name="description" content="The text here describes what the webpage
+		is about. It's what will show up in search results for search engines like
+		google under the title of the webpage. It's important that this is relevant
+		to your page and well written!">
+		<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/myStyle.css')}}"> <!-- my style.css -->
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<script src="{{ url_for('static', filename='js/myJavaScript.js') }}"></script> <!-- myJavaScript -->
+	</head>
+	<body>
+		<div class="wrapper">
+			<p>Your Gold: {{ session['gold']}}</p>
+			<div class="location">
+				<h1>Farm</h1>
+				<p>(earns 10 -20 gold)</p>
+				<form action="/process_money" method="post">
+					<input type="hidden" name="building" value="farm" />
+					<input type="submit" value="Find Gold!"/>
+				</form>
+			</div>
+			<div class="location">
+				<h1>Cave</h1>
+				<p>(earns 5 - 10 gold)</p>
+				<form action="/process_money" method="post">
+					<input type="hidden" name="building" value="cave" />
+					<input type="submit" value="Find Gold!"/>
+				</form>
+			</div>
+			<div class="location">
+				<h1>House</h1>
+				<p>(earns 2 - 5 gold)</p>
+				<form action="/process_money" method="post">
+					<input type="hidden" name="building" value="house" />
+					<input type="submit" value="Find Gold!"/> 
+				</form>
+			</div>
+			<div class="location">
+				<h1>Casino</h1>
+				<p>(earns/ takes 0 - 50 gold)</p>
+				<form action="/process_money" method="post">
+					<input type="hidden" name="building" value="casino" />
+					<input type="submit" value="Find Gold!"/>
+				</form>
+			</div>
+			<p>Activities:</p>
+			<div class="log">
+				{% for i in range (session['length']-1, -1, -1) %}
+				<p class="{{ session['activities_log'][i][0] }}">{{ session['activities_log'][i][1] }}</p>
+				{% endfor %}
+			</div>
+		</div>
+	</body>
+	</html>
