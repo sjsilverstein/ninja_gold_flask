@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, session
 import random
+import time
+import datetime
 app = Flask(__name__)
 app.secret_key = 'test2' # you need to set a secret key for security purposes
 # routing rules and rest of server.py below
@@ -20,17 +22,17 @@ def process_money():
 	cavev = random.randint(5, 10)
 	housev = random.randint(2, 5)
 	casinov = random.randint(-50,50)
+	timestamp = datetime.datetime.now().strftime("%y-%m-%d-%H-%M")
 	buildingsList = [['farm', farmv], ['cave', cavev], ['house', housev], ['casino', casinov]]
 	for i in range(0,len(buildingsList)):
 		if building == buildingsList[i][0]:
 			session['gold'] = session['gold'] + buildingsList[i][1]
 			if buildingsList[i][1] >= 0:
-				session['activities_log'].append(['pos','Earned '+ str(buildingsList[i][1]) + ' gold from the'+str(building)+'! TimeStampHERE'])
+				session['activities_log'].append(['pos','Earned '+ str(buildingsList[i][1]) + ' gold from the'+str(building)+ '! ' + str(timestamp)])
 				session.modified = True
 			else:
-				session['activities_log'].append(['neg','Entered a '+str(building)+' and lost '+str(buildingsList[i][1])+' gold...Ouch.. TimeStampHERE'])
+				session['activities_log'].append(['neg','Entered a '+str(building)+' and lost '+str(buildingsList[i][1])+' gold...Ouch.. ' + str(timestamp)])
 				session.modified = True
-	print session['activities_log']
 	session['length'] = len(session['activities_log'])
 	return redirect('/')
 
